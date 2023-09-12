@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+p {
+  margin: 0;
+}
+
+.h-login {
+  height: calc(100vh - 64px - 65px);
+}
+
+.l-main {
+  min-height: calc(100vh - 64px - 65px);
+}
+
+.h-left {
+  height: calc(100vh - 80px);
+}
+
+.h-stat-head {
+  height: calc(100vh - 60px);
+}
+
+/* 隐藏滚动条 */
+body {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+/* Firefox 隐藏滚动条 */
+body::-webkit-scrollbar {
+  display: none;
+}
