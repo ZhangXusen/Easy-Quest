@@ -1,5 +1,8 @@
 import { getQuestionService } from "@/service/question";
+import { resetAllComponents } from "@/store/components";
 import { useRequest } from "ahooks";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 /*
@@ -8,10 +11,11 @@ import { useParams } from "react-router-dom";
  * @Author: 小国际
  * @Date: 2023-09-02 22:27:42
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-02 22:37:51
+ * @LastEditTime: 2023-09-17 16:25:17
  */
 function useLoadQuestData() {
   const { id = "" } = useParams();
+  const dispatch = useDispatch();
   /*  const [loading, setLoading] = useState(true);
   const [questionData, setQuestionData] = useState({});
   useEffect(() => {
@@ -23,12 +27,34 @@ function useLoadQuestData() {
     fn();
   }, []);
   return { loading, questionData }; */
-  async function getData() {
+  async function getData(id: string) {
+    if (!id) {
+      throw new Error("没有问卷id");
+    }
     const data = await getQuestionService(id);
     return data;
   }
-  const { loading, data, error } = useRequest(getData);
-  return { loading, data, error };
+  const { loading, data, error, run } = useRequest(getData, { manual: true });
+
+  /* 存入store */
+  useEffect(() => {
+    if (!data) return;
+    const { title = "", componentList = [] } = data;
+    //获取默认的selectedId
+    let selectedId = "";
+    //默认选中第一个组件
+    if (componentList.length > 0) {
+      selectedId = componentList[0].fe_id;
+    }
+    dispatch(
+      resetAllComponents({ componentList, selectedId, copiedComponent: null })
+    );
+  }, [data]);
+  /* id变化时，重新获取数据 */
+  useEffect(() => {
+    run(id);
+  }, [id]);
+  return { loading, error };
 }
 
 export default useLoadQuestData;
