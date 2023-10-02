@@ -34,7 +34,7 @@ export const ComponentAttrs: FC = () => {
     if (selectedComponent == null) return;
 
     const { fe_id } = selectedComponent;
-    console.log(newProps);
+    console.log("新props======>", newProps);
     dispatch(changeComponentProps({ id: fe_id, newProps }));
   }
   return (

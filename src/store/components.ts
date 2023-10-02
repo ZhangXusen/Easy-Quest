@@ -6,9 +6,10 @@ import { produce } from "immer";
  * @Author: 小国际
  * @Date: 2023-09-10 11:17:38
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-17 19:42:07
+ * @LastEditTime: 2023-09-27 17:44:05
  */
 import { ComponentPropsType } from "@/components/QuestComponents";
+import { arrayMove } from "@dnd-kit/sortable";
 import { createSlice } from "@reduxjs/toolkit";
 import produce from "immer";
 import cloneDeep from "lodash.clonedeep";
@@ -167,6 +168,30 @@ export const ComponentsSlice = createSlice({
       if (index + 1 > componentList.length) return;
       draft.selectedId = componentList[index + 1].fe_id;
     }),
+    changeComponentTitle: produce(
+      (
+        draft: ComponentStateType,
+        { payload }: PayloadAction<{ fe_id: string; title: string }>
+      ) => {
+        const CurComponent = draft.componentList.find(
+          (c) => c.fe_id === payload.fe_id
+        );
+        if (CurComponent) {
+          CurComponent.title = payload.title;
+        }
+      }
+    ),
+    /* 移动组件位置 */
+    moveComponent: produce(
+      (
+        draft: ComponentStateType,
+        { payload }: PayloadAction<{ newIndex: number; oldIndex: number }>
+      ) => {
+        const CurComponentList = draft.componentList;
+        const { newIndex, oldIndex } = payload;
+        draft.componentList = arrayMove(CurComponentList, oldIndex, newIndex);
+      }
+    ),
   },
 });
 export const {
@@ -181,5 +206,7 @@ export const {
   pasteComponent,
   selectNextComponent,
   selectPrevComponent,
+  changeComponentTitle,
+  moveComponent,
 } = ComponentsSlice.actions;
 export default ComponentsSlice.reducer;

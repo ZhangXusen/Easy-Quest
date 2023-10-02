@@ -5,14 +5,16 @@ import { FC } from "react";
  * @Author: 小国际
  * @Date: 2023-09-10 11:25:22
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-17 20:40:39
+ * @LastEditTime: 2023-09-23 16:49:19
  */
 
+import QuestCheckboxConfig, { QuestCheckboxPropsType } from "./QuestCheckbok";
 import QuestInfoConfig, { QuestionInfoPropsType } from "./QuestInfo";
 import QuestInputConfig, { QuestionInputPropsType } from "./QuestInput";
 import QuestParagraphConfig, {
   QuestionParagraphPropsType,
 } from "./QuestParagraph";
+import QuestRadioConfig, { QuestRadioPropsType } from "./QuestRadio";
 import QuestTextareaConfig, {
   QuestionTextAreaPropsType,
 } from "./QuestTextarea";
@@ -23,7 +25,9 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestTitlePropsType &
   QuestionParagraphPropsType &
   QuestionInfoPropsType &
-  QuestionTextAreaPropsType;
+  QuestionTextAreaPropsType &
+  QuestRadioPropsType &
+  QuestCheckboxPropsType;
 /* 每个组件导出的配置 的type */
 export type ComponentConfigType = {
   title: string;
@@ -40,6 +44,8 @@ const ComponentConfigList: ComponentConfigType[] = [
   QuestParagraphConfig,
   QuestInfoConfig,
   QuestTextareaConfig,
+  QuestRadioConfig,
+  QuestCheckboxConfig,
 ];
 /* 组件分组 */
 export const ComponentConfigGroup = [
@@ -52,6 +58,11 @@ export const ComponentConfigGroup = [
     groupId: "inputGroup",
     groupName: "用户输入",
     components: [QuestInputConfig, QuestTextareaConfig],
+  },
+  {
+    groupId: "selectGroup",
+    groupName: "用户选择",
+    components: [QuestRadioConfig, QuestCheckboxConfig],
   },
 ];
 export const getComponentConfigByType = (type: string) => {

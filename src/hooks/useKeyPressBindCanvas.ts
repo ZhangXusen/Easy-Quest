@@ -7,6 +7,7 @@ import {
 } from "@/store/components";
 import { useKeyPress } from "ahooks";
 import { useDispatch } from "react-redux";
+import { ActionCreators as UndoActionCreators } from "redux-undo";
 
 /*
  * @Description: 绑定画布的快捷键
@@ -44,11 +45,28 @@ export default function useKeyPressBindCanvas() {
     if (!isActiveElementValid()) return;
     dispatch(selectNextComponent());
   });
+  // 撤销
+  useKeyPress(
+    ["ctrl.z", "meta.z"],
+    () => {
+      if (!isActiveElementValid()) return;
+      dispatch(UndoActionCreators.undo());
+    },
+    {
+      exactMatch: true, // 严格匹配:必须只按了ctrl+z才能触发
+    }
+  );
+  // 重做
+  useKeyPress(["ctrl.shift.z", "meta.shift.z"], () => {
+    if (!isActiveElementValid()) return;
+    dispatch(UndoActionCreators.redo());
+  });
 }
 /* 判断当前鼠标聚焦的元素是否合法 */
 function isActiveElementValid() {
   const activeElement = document.activeElement;
   if (activeElement === document.body) return true; // 光标没有 focus 到 input
 
+  if (activeElement?.matches("div[role='button']")) return true; //是否为dnd的拖拽元素
   return false;
 }

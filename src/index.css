@@ -32,3 +32,6 @@ body {
 body::-webkit-scrollbar {
   display: none;
 }
+div[role="button"]{
+  outline: 0;
+}

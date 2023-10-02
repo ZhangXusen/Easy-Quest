@@ -1,5 +1,6 @@
 import { getQuestionService } from "@/service/question";
 import { resetAllComponents } from "@/store/components";
+import { resetPageInfo } from "@/store/pageInfo";
 import { useRequest } from "ahooks";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
@@ -11,7 +12,7 @@ import { useParams } from "react-router-dom";
  * @Author: 小国际
  * @Date: 2023-09-02 22:27:42
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-17 16:25:17
+ * @LastEditTime: 2023-09-24 14:48:40
  */
 function useLoadQuestData() {
   const { id = "" } = useParams();
@@ -39,7 +40,13 @@ function useLoadQuestData() {
   /* 存入store */
   useEffect(() => {
     if (!data) return;
-    const { title = "", componentList = [] } = data;
+    const {
+      title = "",
+      componentList = [],
+      css = "",
+      js = "",
+      desc = "",
+    } = data;
     //获取默认的selectedId
     let selectedId = "";
     //默认选中第一个组件
@@ -49,6 +56,7 @@ function useLoadQuestData() {
     dispatch(
       resetAllComponents({ componentList, selectedId, copiedComponent: null })
     );
+    dispatch(resetPageInfo({ title, desc, js, css }));
   }, [data]);
   /* id变化时，重新获取数据 */
   useEffect(() => {

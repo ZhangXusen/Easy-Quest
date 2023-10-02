@@ -8,12 +8,12 @@ import { useSelector } from "react-redux";
  * @Author: 小国际
  * @Date: 2023-09-12 20:33:32
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-14 20:54:22
+ * @LastEditTime: 2023-09-27 22:27:39
  */
 /* 获取store中组件的信息 */
 export const useGetComponentInfo = () => {
   const components = useSelector<StateType>(
-    (state) => state.components
+    (state) => state.components.present
   ) as ComponentStateType;
   const { componentList = [], selectedId = "", copiedComponent } = components;
   //当前选中的组件

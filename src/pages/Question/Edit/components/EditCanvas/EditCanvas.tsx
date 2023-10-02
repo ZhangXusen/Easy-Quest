@@ -4,13 +4,19 @@
  * @Author: 小国际
  * @Date: 2023-09-06 15:47:05
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-17 15:38:48
+ * @LastEditTime: 2023-09-27 17:50:37
  */
 
+import { SortableContainer } from "@/components/DragSortable/SortableContainer";
+import { SortableItem } from "@/components/DragSortable/SortableItem";
 import { getComponentConfigByType } from "@/components/QuestComponents";
 import { useGetComponentInfo } from "@/hooks/useGetComponentsInfo";
 import useKeyPressBindCanvas from "@/hooks/useKeyPressBindCanvas";
-import { ComponentsInfoType, changeSelectedId } from "@/store/components";
+import {
+  ComponentsInfoType,
+  changeSelectedId,
+  moveComponent,
+} from "@/store/components";
 import { FC } from "react";
 import { useDispatch } from "react-redux";
 
@@ -38,26 +44,41 @@ export const EditCanvas: FC<PropType> = (props: PropType) => {
   }
 
   useKeyPressBindCanvas();
+
+  /* 排序相关逻辑 */
+  //SortableContainer组件items的每个组件都需要id
+  const componentListWithId = componentList.map((c) => {
+    return { ...c, id: c.fe_id };
+  });
+
+  function handleDragEnd(oldIndex: number, newIndex: number): void {
+    dispatch(moveComponent({ oldIndex, newIndex }));
+  }
   return (
-    <div className="bg-white min-h-full overflow-hidden">
-      {componentList
-        .filter((c) => !c.isHidden)
-        .map((item, index) => {
-          const { fe_id, isLocked } = item;
-          return (
-            <div
-              key={fe_id}
-              className={`${
-                fe_id === selectedId
-                  ? "m-3 border-2 border-solid p-3 rounded border-blue-300 hover:border-blue-300"
-                  : "m-3 border-2 border-solid border-white p-3 rounded hover:border-slate-300"
-              } ${isLocked ? "opacity-50 cursor-not-allowed" : ""}`}
-              onClick={(e: any) => handleClick(e, fe_id)}
-            >
-              <div className="pointer-events-none">{getComponent(item)}</div>
-            </div>
-          );
-        })}
-    </div>
+    <SortableContainer items={componentListWithId} onDragEnd={handleDragEnd}>
+      <div className="bg-white min-h-full overflow-hidden">
+        {componentList
+          .filter((c) => !c.isHidden)
+          .map((item, index) => {
+            const { fe_id, isLocked } = item;
+            return (
+              <SortableItem id={fe_id} key={fe_id}>
+                <div
+                  className={`${
+                    fe_id === selectedId
+                      ? "m-3 border-2 border-solid p-3 rounded border-blue-300 hover:border-blue-300"
+                      : "m-3 border-2 border-solid border-white p-3 rounded hover:border-slate-300"
+                  } ${isLocked ? "opacity-50 cursor-not-allowed" : ""}`}
+                  onClick={(e: any) => handleClick(e, fe_id)}
+                >
+                  <div className="pointer-events-none">
+                    {getComponent(item)}
+                  </div>
+                </div>
+              </SortableItem>
+            );
+          })}
+      </div>
+    </SortableContainer>
   );
 };
