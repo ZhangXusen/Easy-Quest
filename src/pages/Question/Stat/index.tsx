@@ -4,7 +4,7 @@
  * @Author: 小国际
  * @Date: 2023-08-29 15:27:56
  * @LastEditors: 小国际
- * @LastEditTime: 2023-10-04 16:06:53
+ * @LastEditTime: 2023-10-04 18:18:44
  */
 
 import { useGetPageInfo } from "@/hooks/useGetPageInfo";
@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { ComponentsList } from "./components/ComponentsList";
 import { PageStat } from "./components/PageStat";
 import { StatHeader } from "./components/StatHeader";
+import { ChartStat } from "./components/ChartStat";
 
 export const Stat: FC = () => {
   useTitle(`问卷编辑-${"超级问卷"}`);
@@ -66,7 +67,12 @@ export const Stat: FC = () => {
             setSelectedComponentType={setSelectedComponentType}
           />
         </div>
-        <div className="w-[400px] ml-6 bg-white overflow-hidden py-3 px-4"></div>
+        <div className="w-[400px] ml-6 bg-white overflow-hidden py-3 px-4">
+          <ChartStat
+            selectedComponentId={selectedComponentId}
+            selectedComponentType={selectedComponentType}
+          />
+        </div>
       </div>
     );
   }

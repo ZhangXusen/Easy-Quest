@@ -4,7 +4,7 @@
  * @Author: 小国际
  * @Date: 2023-09-18 22:49:37
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-23 16:55:14
+ * @LastEditTime: 2023-10-04 21:07:25
  */
 export type QuestRadioPropsType = {
   title?: string;
@@ -29,4 +29,9 @@ export const QuestionRadioDefaultProps: QuestRadioPropsType = {
     { value: "item3", text: "选项3" },
   ],
   value: "",
+};
+
+// 统计组件的属性类型
+export type QuestionRadioStatPropsType = {
+  stat: Array<{ name: string; count: number }>;
 };

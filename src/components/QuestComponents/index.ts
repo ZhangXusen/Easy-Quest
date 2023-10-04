@@ -5,16 +5,22 @@ import { FC } from "react";
  * @Author: 小国际
  * @Date: 2023-09-10 11:25:22
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-23 16:49:19
+ * @LastEditTime: 2023-10-04 21:40:33
  */
 
-import QuestCheckboxConfig, { QuestCheckboxPropsType } from "./QuestCheckbok";
+import QuestCheckboxConfig, {
+  QuestCheckboxPropsType,
+  QuestionCheckboxStatPropsType,
+} from "./QuestCheckbok";
 import QuestInfoConfig, { QuestionInfoPropsType } from "./QuestInfo";
 import QuestInputConfig, { QuestionInputPropsType } from "./QuestInput";
 import QuestParagraphConfig, {
   QuestionParagraphPropsType,
 } from "./QuestParagraph";
-import QuestRadioConfig, { QuestRadioPropsType } from "./QuestRadio";
+import QuestRadioConfig, {
+  QuestRadioPropsType,
+  QuestionRadioStatPropsType,
+} from "./QuestRadio";
 import QuestTextareaConfig, {
   QuestionTextAreaPropsType,
 } from "./QuestTextarea";
@@ -28,6 +34,10 @@ export type ComponentPropsType = QuestionInputPropsType &
   QuestionTextAreaPropsType &
   QuestRadioPropsType &
   QuestCheckboxPropsType;
+
+/* 各个组件的统计组件type */
+export type ComponentStatePropsType = QuestionRadioStatPropsType &
+  QuestionCheckboxStatPropsType;
 /* 每个组件导出的配置 的type */
 export type ComponentConfigType = {
   title: string;
@@ -35,6 +45,7 @@ export type ComponentConfigType = {
   Component: FC<ComponentPropsType>;
   defaultProps: ComponentPropsType;
   PropComponent: FC<ComponentPropsType>;
+  StatComponent?: FC<ComponentStatePropsType>;
 };
 
 /* 所有组件的配置的列表 */
