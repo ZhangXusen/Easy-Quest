@@ -4,7 +4,7 @@
  * @Author: 小国际
  * @Date: 2023-09-06 15:47:05
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-27 17:50:37
+ * @LastEditTime: 2023-10-04 15:24:11
  */
 
 import { SortableContainer } from "@/components/DragSortable/SortableContainer";
@@ -59,7 +59,7 @@ export const EditCanvas: FC<PropType> = (props: PropType) => {
       <div className="bg-white min-h-full overflow-hidden">
         {componentList
           .filter((c) => !c.isHidden)
-          .map((item, index) => {
+          .map((item) => {
             const { fe_id, isLocked } = item;
             return (
               <SortableItem id={fe_id} key={fe_id}>

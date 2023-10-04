@@ -12,7 +12,7 @@ import { useParams } from "react-router-dom";
  * @Author: 小国际
  * @Date: 2023-09-02 22:27:42
  * @LastEditors: 小国际
- * @LastEditTime: 2023-09-24 14:48:40
+ * @LastEditTime: 2023-10-02 22:11:56
  */
 function useLoadQuestData() {
   const { id = "" } = useParams();
@@ -46,6 +46,7 @@ function useLoadQuestData() {
       css = "",
       js = "",
       desc = "",
+      isPublished = false,
     } = data;
     //获取默认的selectedId
     let selectedId = "";
@@ -56,7 +57,7 @@ function useLoadQuestData() {
     dispatch(
       resetAllComponents({ componentList, selectedId, copiedComponent: null })
     );
-    dispatch(resetPageInfo({ title, desc, js, css }));
+    dispatch(resetPageInfo({ title, desc, js, css, isPublished }));
   }, [data]);
   /* id变化时，重新获取数据 */
   useEffect(() => {
