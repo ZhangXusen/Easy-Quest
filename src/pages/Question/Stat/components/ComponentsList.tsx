@@ -8,7 +8,7 @@ import { ComponentsInfoType } from "@/store/components";
  * @Author: 小国际
  * @Date: 2023-10-04 15:17:25
  * @LastEditors: 小国际
- * @LastEditTime: 2023-10-04 15:34:45
+ * @LastEditTime: 2023-10-04 17:38:12
  */
 
 type PropsType = {
@@ -40,6 +40,7 @@ export const ComponentsList = (props: PropsType) => {
 
           return (
             <div
+              key={fe_id}
               className={`${
                 fe_id === selectedComponentId
                   ? "m-3 border-2 border-solid p-3 rounded border-blue-300 hover:border-blue-300"
